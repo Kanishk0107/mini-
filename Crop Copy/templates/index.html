@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop Recommendation System</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: #111827;
+            color: #ffffff;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: linear-gradient(90deg, #9333EA, #7E22CE);
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .logo-container {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-container img {
+            width: 100%;
+            height: auto;
+        }
+
+        .header h1 {
+            color: white;
+            font-size: 1.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        form {
+            background: rgba(30, 41, 59, 0.5);
+            padding: 2rem;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #fff;
+            font-weight: 500;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.8rem;
+            background: rgba(17, 24, 39, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #9333EA;
+            box-shadow: 0 0 5px rgba(147, 51, 234, 0.3);
+        }
+
+        button {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(90deg, #9333EA, #7E22CE);
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        .prediction {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 10px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .prediction h3 {
+            color: #9333EA;
+            font-size: 1.3rem;
+        }
+
+        .social-links {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-button {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #9333EA;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: #ffffff;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-button:hover {
+            transform: translateY(-5px);
+            background: #7E22CE;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo-container">
+            <!-- Add your NIELIT logo here -->
+            <img src="C:\Users\kanis\OneDrive\Documents\Projects\Crop Copy\NIELIT_logo.png" alt="NIELIT Logo">
+
+            <!-- <img src="" alt="NIELIT Logo"> -->
+        </div>
+        <h1>Crop Recommendation System</h1>
+    </header>
+
+    <div class="container">
+        <form action="/predict" method="post">
+            <div class="form-group">
+                <label for="nitrogen">Nitrogen (N):</label>
+                <input type="number" name="nitrogen" required>
+            </div>
+
+            <div class="form-group">
+                <label for="phosphorous">Phosphorous (P):</label>
+                <input type="number" name="phosphorous" required>
+            </div>
+
+            <div class="form-group">
+                <label for="potassium">Potassium (K):</label>
+                <input type="number" name="potassium" required>
+            </div>
+
+            <div class="form-group">
+                <label for="temperature">Temperature (°C):</label>
+                <input type="number" step="0.01" name="temperature" required>
+            </div>
+
+            <div class="form-group">
+                <label for="humidity">Humidity (%):</label>
+                <input type="number" step="0.01" name="humidity" required>
+            </div>
+
+            <div class="form-group">
+                <label for="ph">pH Level:</label>
+                <input type="number" step="0.01" name="ph" required>
+            </div>
+
+            <div class="form-group">
+                <label for="rainfall">Rainfall (mm):</label>
+                <input type="number" step="0.01" name="rainfall" required>
+            </div>
+
+            <button type="submit">Predict Crop</button>
+        </form>
+
+        {% if prediction %}
+        <div class="prediction">
+            <h3>Recommended Crop: {{ prediction }}</h3>
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="social-links">
+        <a href="https://github.com/kanishk0107" target="_blank" class="social-button">
+            <i class="fab fa-github"></i>
+        </a>
+        <a href="https://linkedin.com/in/kanishk-a-bhardwaj" target="_blank" class="social-button">
+            <i class="fab fa-linkedin-in"></i>
+        </a>
+    </div>
+</body>
+</html>
